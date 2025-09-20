@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lingua Phone - Deployment Instructions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #4CAF50;
+            margin-top: 30px;
+        }
+        .steps {
+            background-color: #fff3e0;
+            padding: 15px;
+            border-left: 4px solid #ff9800;
+            margin: 20px 0;
+        }
+        .important {
+            background-color: #ffebee;
+            padding: 15px;
+            border-left: 4px solid #f44336;
+            margin: 20px 0;
+        }
+        .success {
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-left: 4px solid #4CAF50;
+            margin: 20px 0;
+        }
+        ul {
+            line-height: 1.6;
+        }
+        code {
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lingua Phone Application - Deployment Instructions</h1>
+        
+        <div class="important">
+            <h2>Important Notice</h2>
+            <p>Run these commands one by one in your terminal. Do not copy and paste all commands at once.</p>
+        </div>
+        
+        <h2>Step-by-Step Deployment</h2>
+        
+        <div class="steps">
+            <h3>Step 1: Get Cluster Credentials</h3>
+            <code>gcloud container clusters get-credentials lingua-cluster --zone=us-central1-a</code>
+        </div>
+        
+        <div class="steps">
+            <h3>Step 2: Build Backend Image</h3>
+            <code>docker build -t gcr.io/lingua-phone/lingua-backend:latest -f docker/backend.Dockerfile .</code>
+        </div>
+        
+        <div class="steps">
+            <h3>Step 3: Build Frontend Image</h3>
+            <code>docker build -t gcr.io/lingua-phone/lingua-frontend:latest -f docker/frontend-k8s.Dockerfile .</code>
+        </div>
+        
+        <div class="steps">
+            <h3>Step 4: Push Backend Image</h3>
+            <code>docker push gcr.io/lingua-phone/lingua-backend:latest</code>
+        </div>
+        
+        <div class="steps">
+            <h3>Step 5: Push Frontend Image</h3>
+            <code>docker push gcr.io/lingua-phone/lingua-frontend:latest</code>
+        </div>
+        
+        <div class="steps">
+            <h3>Step 6: Delete Existing Pods</h3>
+            <code>kubectl delete pods -n lingua-app --all</code>
+        </div>
+        
+        <div class="steps">
+            <h3>Step 7: Check Pod Status</h3>
+            <p>Run this command multiple times until you see "Running" status:</p>
+            <code>kubectl get pods -n lingua-app</code>
+        </div>
+        
+        <div class="steps">
+            <h3>Step 8: Get Services</h3>
+            <p>Once pods are running, get the external IP:</p>
+            <code>kubectl get services -n lingua-app</code>
+        </div>
+        
+        <div class="success">
+            <h2>Expected Result</h2>
+            <ul>
+                <li>Both pods show <code>1/1 Running</code> status</li>
+                <li>No more <code>CrashLoopBackOff</code> errors</li>
+                <li>Application accessible through external IP</li>
+            </ul>
+        </div>
+        
+        <div class="important">
+            <h2>Troubleshooting</h2>
+            <p>If still failing, check:</p>
+            <ul>
+                <li><code>docker/nginx-k8s.conf</code> has <code>server lingua-backend-service:3002;</code></li>
+                <li><code>frontend-k8s.Dockerfile</code> copies <code>nginx-k8s.conf</code> to <code>/etc/nginx/nginx.conf</code></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

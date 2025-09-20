@@ -1,0 +1,43 @@
+HOW TO DEPLOY LINGUA PHONE TO GKE
+=================================
+
+Due to terminal issues, please follow these steps to deploy the application:
+
+1. Close this PowerShell terminal window completely.
+
+2. Open a NEW Command Prompt (cmd) or PowerShell window:
+   - Press Windows key
+   - Type "cmd" or "PowerShell"
+   - Press Enter
+
+3. Navigate to the project directory:
+   cd C:\Users\Lenovo\Lingua-phone-monorepo
+
+4. Execute the deployment script:
+   complete-deployment-steps.bat
+
+This script will automatically perform all the necessary steps:
+- Create the namespace "lingua-app"
+- Create the secret for Google Cloud credentials
+- Build the Docker images for backend and frontend
+- Deploy the application to GKE
+- Verify the deployment
+
+If any step fails, the script will show an error message and stop execution.
+
+After successful deployment:
+1. Check the services to get the external IP:
+   kubectl get services -n lingua-app
+
+2. Look for the frontend service and note its external IP.
+
+3. Access the application in your browser using:
+   http://<EXTERNAL-IP>
+
+Troubleshooting:
+- If the namespace already exists, you can skip that step
+- If the secret already exists, you can delete it first with:
+  kubectl delete secret google-cloud-key --namespace=lingua-app
+- If you encounter permission issues, ensure your Google Cloud service account has the necessary permissions
+
+For more detailed instructions, please refer to the GKE_DEPLOYMENT_INSTRUCTIONS.md file.

@@ -1,0 +1,35 @@
+Lingua Phone - Deployment Status Check Instructions
+==================================================
+
+Since we're having issues with the terminal, please follow these manual steps:
+
+1. Open a new Command Prompt or PowerShell window
+2. Navigate to your project directory:
+   cd C:\Users\Lenovo\Lingua-phone-monorepo
+
+3. Check the status of your pods:
+   kubectl get pods -n lingua-app
+
+4. Check the status of your services:
+   kubectl get services -n lingua-app
+
+Expected Results:
+- Both pods should show "1/1 Running" status
+- The frontend service should have an external IP assigned
+
+If the frontend pod is still in CrashLoopBackOff status:
+1. Get the exact name of the frontend pod:
+   kubectl get pods -n lingua-app | findstr lingua-frontend
+
+2. Check the logs of the frontend pod:
+   kubectl logs <frontend-pod-name> -n lingua-app
+   (Replace <frontend-pod-name> with the actual name from step 1)
+
+3. If you need to redeploy:
+   complete-deployment-no-python.bat
+
+After successful deployment:
+1. Get the external IP of your application:
+   kubectl get services -n lingua-app
+
+2. Access your application through the external IP shown above.

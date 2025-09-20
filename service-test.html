@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Service Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-result { margin: 10px 0; padding: 10px; border-radius: 5px; }
+        .success { background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .error { background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>Service Connectivity Test</h1>
+    <div id="results"></div>
+
+    <script>
+        const resultsDiv = document.getElementById('results');
+        
+        function addResult(message, isSuccess) {
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `test-result ${isSuccess ? 'success' : 'error'}`;
+            resultDiv.textContent = message;
+            resultsDiv.appendChild(resultDiv);
+        }
+        
+        // Test frontend service
+        addResult('1. Testing frontend service (http://localhost:8080)...', false);
+        fetch('http://localhost:8080')
+            .then(response => {
+                addResult(`   Frontend status code: ${response.status}`, true);
+            })
+            .catch(error => {
+                addResult(`   Error accessing frontend: ${error.message}`, false);
+            });
+        
+        // Test backend service
+        addResult('2. Testing backend service (http://localhost:3002)...', false);
+        fetch('http://localhost:3002')
+            .then(response => {
+                addResult(`   Backend status code: ${response.status}`, true);
+            })
+            .catch(error => {
+                addResult(`   Error accessing backend: ${error.message}`, false);
+            });
+        
+        // Test backend chat endpoint
+        addResult('3. Testing backend chat endpoint...', false);
+        fetch('http://localhost:3002/api/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                message: "I am looking for a women's t-shirt",
+                language: "en"
+            })
+        })
+            .then(response => {
+                addResult(`   Chat endpoint status code: ${response.status}`, true);
+                return response.text();
+            })
+            .then(data => {
+                addResult(`   Chat endpoint response: ${data}`, true);
+            })
+            .catch(error => {
+                addResult(`   Error accessing chat endpoint: ${error.message}`, false);
+            });
+    </script>
+</body>
+</html>

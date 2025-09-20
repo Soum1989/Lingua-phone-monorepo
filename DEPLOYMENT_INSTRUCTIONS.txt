@@ -1,0 +1,35 @@
+GKE DEPLOYMENT INSTRUCTIONS
+==========================
+
+Due to terminal issues, please follow these manual steps to deploy the application:
+
+1. Open a new Command Prompt or PowerShell window (not the current one)
+
+2. Navigate to the project directory:
+   cd C:\Users\Lenovo\Lingua-phone-monorepo
+
+3. Follow the instructions in the GKE_DEPLOYMENT_INSTRUCTIONS.md file:
+   - You can open this file with any text editor or markdown viewer
+   - The file contains detailed step-by-step deployment instructions
+
+4. Execute the commands one by one as described in the instructions
+
+If you encounter any issues during deployment, please refer to the troubleshooting section in the instructions file.
+
+For your convenience, the main deployment steps are:
+
+1. Create namespace:
+   kubectl create namespace lingua-app
+
+2. Create secret:
+   kubectl create secret generic google-cloud-key --from-file=key.json=packages/backend/keys/service-account.json --namespace=lingua-app
+
+3. Build Docker images:
+   docker build -t lingua-backend:latest -f docker/backend.Dockerfile .
+   docker build -t lingua-frontend:latest -f docker/frontend.Dockerfile .
+
+4. Deploy to GKE:
+   kubectl apply -k k8s/
+
+5. Verify deployment:
+   kubectl get pods -n lingua-app

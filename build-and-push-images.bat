@@ -1,0 +1,16 @@
+@echo off
+echo Building and pushing Docker images to Google Container Registry...
+
+echo Building backend image...
+docker build -t gcr.io/lingua-phone/lingua-backend:latest -f docker/backend.Dockerfile .
+
+echo Building frontend image...
+docker build -t gcr.io/lingua-phone/lingua-frontend:latest -f docker/frontend-k8s.Dockerfile .
+
+echo Pushing backend image to GCR...
+docker push gcr.io/lingua-phone/lingua-backend:latest
+
+echo Pushing frontend image to GCR...
+docker push gcr.io/lingua-phone/lingua-frontend:latest
+
+echo Docker images built and pushed successfully!

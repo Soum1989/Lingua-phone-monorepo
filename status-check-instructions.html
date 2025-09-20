@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lingua Phone - Manual Status Check</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .step {
+            background-color: #e8f4f8;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #3498db;
+            border-radius: 5px;
+        }
+        .expected {
+            background-color: #e8f8f5;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #2ecc71;
+            border-radius: 5px;
+        }
+        .troubleshooting {
+            background-color: #fef9e7;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #f39c12;
+            border-radius: 5px;
+        }
+        .miniconda {
+            background-color: #ebf5fb;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #85c1e9;
+            border-radius: 5px;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lingua Phone - Manual Deployment Status Check</h1>
+        
+        <p>Please follow these steps manually in your terminal:</p>
+        
+        <div class="step">
+            <h3>Step 1: Authenticate with Google Cloud</h3>
+            <p>Make sure you're authenticated with Google Cloud:</p>
+            <code>gcloud auth list</code>
+        </div>
+        
+        <div class="step">
+            <h3>Step 2: Get Cluster Credentials</h3>
+            <p>Get cluster credentials:</p>
+            <code>gcloud container clusters get-credentials lingua-cluster --zone=us-central1-a</code>
+        </div>
+        
+        <div class="step">
+            <h3>Step 3: Check Pod Status</h3>
+            <p>Check the status of your pods:</p>
+            <code>kubectl get pods -n lingua-app</code>
+        </div>
+        
+        <div class="step">
+            <h3>Step 4: Check Service Status</h3>
+            <p>Check the status of your services:</p>
+            <code>kubectl get services -n lingua-app</code>
+        </div>
+        
+        <div class="step">
+            <h3>Step 5: Check Frontend Logs (if needed)</h3>
+            <p>If the frontend pod is still in CrashLoopBackOff status, check its logs:</p>
+            <code>kubectl logs &lt;frontend-pod-name&gt; -n lingua-app</code>
+            <p>(Replace &lt;frontend-pod-name&gt; with the actual name of your frontend pod)</p>
+        </div>
+        
+        <div class="miniconda">
+            <h3>Using Miniconda for Deployment</h3>
+            <p>Since you have Miniconda installed, you can use the Miniconda-specific deployment script:</p>
+            <p>First, check if Miniconda is properly set up:</p>
+            <code>check-miniconda-setup.bat</code>
+            <p>If everything is set up correctly, run the deployment script:</p>
+            <code>complete-deployment-miniconda.bat</code>
+        </div>
+        
+        <div class="step">
+            <h3>Alternative Deployment Method</h3>
+            <p>If you prefer not to use Miniconda, you can run the deployment script that doesn't require Python:</p>
+            <code>complete-deployment-no-python.bat</code>
+        </div>
+        
+        <div class="expected">
+            <h3>Expected Results</h3>
+            <ul>
+                <li>Both pods should show "1/1 Running" status</li>
+                <li>The frontend service should have an external IP assigned</li>
+                <li>No more "CrashLoopBackOff" errors</li>
+            </ul>
+        </div>
+        
+        <div class="troubleshooting">
+            <h3>Troubleshooting</h3>
+            <p>If the frontend pod is still crashing:</p>
+            <ol>
+                <li>Check that the nginx configuration in <code>docker/nginx-k8s.conf</code> contains:
+                    <br><code>server lingua-backend-service:3002;</code></li>
+                <li>Verify that the frontend Dockerfile (<code>docker/frontend-k8s.Dockerfile</code>) copies the nginx configuration correctly</li>
+                <li>Make sure the Google Cloud TTS is properly configured with the service account</li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>

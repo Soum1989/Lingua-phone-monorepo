@@ -1,0 +1,60 @@
+Lingua Phone Application - Final Fix Instructions
+================================================
+
+PROBLEM:
+Frontend pod is crashing with error:
+"host not found in upstream "backend:3002" in /etc/nginx/nginx.conf:10"
+
+ROOT CAUSE:
+Frontend container is using wrong nginx configuration with "backend:3002" 
+instead of "lingua-backend-service:3002".
+
+SOLUTION:
+Rebuild frontend Docker image with correct Kubernetes-specific configuration.
+
+EASY OPTION (Using Batch File):
+Run the rebuild-with-miniconda.bat file which will automatically:
+1. Get cluster credentials
+2. Build and push Docker images
+3. Delete existing pods
+4. Check pod status
+
+MANUAL STEPS TO FIX:
+
+1. GET CLUSTER CREDENTIALS:
+   gcloud container clusters get-credentials lingua-cluster --zone=us-central1-a
+
+2. BUILD BACKEND IMAGE:
+   docker build -t gcr.io/lingua-phone/lingua-backend:latest -f docker/backend.Dockerfile .
+
+3. BUILD FRONTEND IMAGE:
+   docker build -t gcr.io/lingua-phone/lingua-frontend:latest -f docker/frontend-k8s.Dockerfile .
+
+4. PUSH BACKEND IMAGE:
+   docker push gcr.io/lingua-phone/lingua-backend:latest
+
+5. PUSH FRONTEND IMAGE:
+   docker push gcr.io/lingua-phone/lingua-frontend:latest
+
+6. DELETE EXISTING PODS:
+   kubectl delete pods -n lingua-app --all
+
+7. CHECK POD STATUS (repeat until Running):
+   kubectl get pods -n lingua-app
+
+8. GET EXTERNAL IP:
+   kubectl get services -n lingua-app
+
+EXPECTED RESULT:
+- Both pods show "1/1 Running" status
+- No more "CrashLoopBackOff" errors
+- Application accessible through external IP
+
+TROUBLESHOOTING:
+If still failing, check:
+- docker/nginx-k8s.conf has "server lingua-backend-service:3002;"
+- frontend-k8s.Dockerfile copies nginx-k8s.conf to /etc/nginx/nginx.conf
+- Building with -f docker/frontend-k8s.Dockerfile flag
+
+NOTE: Since Python is not directly installed but Miniconda is available, 
+you can run Python scripts using: python script_name.py

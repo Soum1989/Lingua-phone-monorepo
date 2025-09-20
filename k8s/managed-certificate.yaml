@@ -1,0 +1,8 @@
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: lingua-frontend-certificate
+  namespace: lingua-app
+spec:
+  domains:
+    - lingua-phone.gketurns10.com

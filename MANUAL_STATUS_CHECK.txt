@@ -1,0 +1,46 @@
+Lingua Phone - Manual Deployment Status Check
+============================================
+
+Please follow these steps manually in your terminal:
+
+1. First, make sure you're authenticated with Google Cloud:
+   gcloud auth list
+
+2. Get cluster credentials:
+   gcloud container clusters get-credentials lingua-cluster --zone=us-central1-a
+
+3. Check the status of your pods:
+   kubectl get pods -n lingua-app
+
+4. Check the status of your services:
+   kubectl get services -n lingua-app
+
+5. If the frontend pod is still in CrashLoopBackOff status, check its logs:
+   kubectl logs <frontend-pod-name> -n lingua-app
+   (Replace <frontend-pod-name> with the actual name of your frontend pod)
+
+6. Redeployment options:
+   
+   Option A: Using Miniconda (since you have it installed)
+   - First, check if Miniconda is properly set up:
+     check-miniconda-setup.bat
+   - If everything is set up correctly, run the deployment script:
+     complete-deployment-miniconda.bat
+
+   Option B: Without Python dependency
+   - Run the deployment script that doesn't require Python:
+     complete-deployment-no-python.bat
+
+Expected Results:
+- Both pods should show "1/1 Running" status
+- The frontend service should have an external IP assigned
+- No more "CrashLoopBackOff" errors
+
+Troubleshooting:
+If the frontend pod is still crashing:
+1. Check that the nginx configuration in docker/nginx-k8s.conf contains:
+   server lingua-backend-service:3002;
+   
+2. Verify that the frontend Dockerfile (docker/frontend-k8s.Dockerfile) copies the nginx configuration correctly
+
+3. Make sure the Google Cloud TTS is properly configured with the service account

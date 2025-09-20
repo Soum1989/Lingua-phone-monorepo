@@ -1,0 +1,6 @@
+@echo off
+echo Checking pod status in lingua-app namespace...
+kubectl get pods -n lingua-app
+echo.
+echo Checking service status in lingua-app namespace...
+kubectl get services -n lingua-app

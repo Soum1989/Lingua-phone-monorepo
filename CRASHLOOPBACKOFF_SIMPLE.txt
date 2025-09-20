@@ -1,0 +1,33 @@
+CRASHLOOPBACKOFF - EXPLAINED SIMPLY
+
+================================
+
+WHAT IT MEANS:
+The frontend part of your application keeps crashing and restarting.
+
+WHY IT HAPPENS:
+Think of it like a computer that turns on, encounters an error, shuts down, and then tries to turn on again - only to encounter the same error and shut down again. This creates a loop.
+
+COMMON CAUSES:
+- Configuration files are incorrect
+- The application can't find what it needs to run
+- There's a mismatch between different parts of the system
+
+WHAT WE'VE DONE TO FIX IT:
+1. We found the configuration issue
+2. We corrected the nginx configuration file
+3. We updated how the frontend connects to the backend
+4. We applied these fixes to your Google Kubernetes Engine deployment
+5. We deleted the old problematic pod to force creation of a new one
+
+WHAT YOU SHOULD DO NOW:
+1. Wait 5-10 minutes for the changes to take effect
+2. Run: COMPLETE_STATUS_CHECK.bat
+3. Look for the frontend pod to show "1/1 Running" instead of "CrashLoopBackOff"
+4. Access your application at: http://34.45.239.154
+
+THIS IS A COMMON ISSUE:
+Many applications experience this during deployment. Our fixes should resolve it.
+
+IF IT CONTINUES:
+Run: diagnose-frontend-crash.bat for detailed information

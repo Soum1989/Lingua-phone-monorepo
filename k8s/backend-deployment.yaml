@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lingua-backend
+  namespace: lingua-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lingua-backend
+  template:
+    metadata:
+      labels:
+        app: lingua-backend
+    spec:
+      containers:
+      - name: lingua-backend
+        image: gcr.io/lingua-phone/lingua-backend:latest
+        ports:
+        - containerPort: 3002
+        envFrom:
+        - configMapRef:
+            name: lingua-config
+        env:
+        - name: PORT
+          value: "3002"
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /var/secrets/google/key.json
+        volumeMounts:
+        - name: google-cloud-key
+          mountPath: /var/secrets/google
+          readOnly: true
+      volumes:
+      - name: google-cloud-key
+        secret:
+          secretName: google-cloud-key
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lingua-backend-service
+  namespace: lingua-app
+spec:
+  selector:
+    app: lingua-backend
+  ports:
+  - protocol: TCP
+    port: 3002
+    targetPort: 3002
+  type: ClusterIP

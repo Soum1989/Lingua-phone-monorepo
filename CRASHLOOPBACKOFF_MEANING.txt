@@ -1,0 +1,47 @@
+WHAT DOES "CrashLoopBackOff" MEAN?
+
+================================
+
+This is a Kubernetes pod status that indicates your frontend application
+is stuck in a crash-restart loop. Here's what's happening:
+
+1. Kubernetes starts your frontend pod
+2. Something goes wrong and the application crashes
+3. Kubernetes waits a moment and tries to restart it
+4. The application crashes again
+5. Kubernetes waits longer and tries again
+6. This cycle continues indefinitely
+
+WHY THIS HAPPENS:
+
+Common causes include:
+- Configuration errors
+- Missing dependencies
+- Port conflicts
+- Permission issues
+- Application bugs
+
+WHAT WE'VE DONE TO FIX IT:
+
+We've identified and addressed the root cause:
+✓ Updated frontend deployment configuration
+✓ Fixed nginx configuration to properly reference backend service
+✓ Applied updated configuration to your GKE cluster
+✓ Deleted old pod to force creation of a new one with our fixes
+
+WHAT YOU SHOULD DO NOW:
+
+1. Wait a few minutes for the new pod to initialize with our fixes
+2. Run: COMPLETE_STATUS_CHECK.bat to check if the pod is now running
+3. Look for the frontend pod to show "1/1 Running" status
+4. Access your application at: http://34.45.239.154
+
+IF IT'S STILL CRASHING:
+
+1. Run: diagnose-frontend-crash.bat for detailed diagnostics
+2. Check the generated log files for specific error messages
+3. Review the nginx configuration in docker/nginx-k8s.conf
+4. Verify the backend service name matches in all configurations
+
+This is a common issue during Kubernetes deployments and our fixes
+should resolve it. Please allow a few minutes for the changes to take effect.

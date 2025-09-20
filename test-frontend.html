@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Frontend Test</title>
+</head>
+<body>
+    <h1>Frontend Test</h1>
+    <p>If you can see this page, the frontend server is running.</p>
+    <p>Attempting to access the backend API:</p>
+    <div id="result"></div>
+
+    <script>
+        fetch('http://localhost:3002/api/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                message: "I am looking for a women's t-shirt",
+                language: "en"
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('result').innerHTML = '<p>Success: ' + JSON.stringify(data) + '</p>';
+        })
+        .catch(error => {
+            document.getElementById('result').innerHTML = '<p>Error: ' + error + '</p>';
+        });
+    </script>
+</body>
+</html>

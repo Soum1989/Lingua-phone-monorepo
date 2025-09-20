@@ -1,0 +1,46 @@
+Lingua Phone Application - Manual Deployment Steps
+=================================================
+
+IMPORTANT: Run these commands one by one in your terminal
+
+STEP 1: Get cluster credentials
+-------------------------------
+gcloud container clusters get-credentials lingua-cluster --zone=us-central1-a
+
+STEP 2: Build backend image
+---------------------------
+docker build -t gcr.io/lingua-phone/lingua-backend:latest -f docker/backend.Dockerfile .
+
+STEP 3: Build frontend image
+----------------------------
+docker build -t gcr.io/lingua-phone/lingua-frontend:latest -f docker/frontend-k8s.Dockerfile .
+
+STEP 4: Push backend image
+--------------------------
+docker push gcr.io/lingua-phone/lingua-backend:latest
+
+STEP 5: Push frontend image
+---------------------------
+docker push gcr.io/lingua-phone/lingua-frontend:latest
+
+STEP 6: Delete existing pods
+----------------------------
+kubectl delete pods -n lingua-app --all
+
+STEP 7: Check pod status (run multiple times)
+--------------------------------------------
+kubectl get pods -n lingua-app
+
+STEP 8: Get services (when pods are running)
+-------------------------------------------
+kubectl get services -n lingua-app
+
+EXPECTED RESULT:
+- Both pods show "1/1 Running" status
+- No more "CrashLoopBackOff" errors
+- Application accessible through external IP
+
+TROUBLESHOOTING:
+If still failing, check:
+- docker/nginx-k8s.conf has "server lingua-backend-service:3002;"
+- frontend-k8s.Dockerfile copies nginx-k8s.conf to /etc/nginx/nginx.conf

@@ -1,0 +1,31 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: lingua-ingress
+  namespace: lingua-app
+  annotations:
+    kubernetes.io/ingress.class: gce
+    networking.gke.io/managed-certificates: lingua-frontend-certificate
+    kubernetes.io/ingress.allow-http: "false"
+spec:
+  rules:
+    - host: lingua-phone.gketurns10.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: lingua-frontend-service
+                port:
+                  number: 80
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: lingua-backend-service
+                port:
+                  number: 3002
+  tls:
+  - hosts:
+    - lingua-phone.gketurns10.com
