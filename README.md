@@ -1,4 +1,4 @@
-Lingua Phone Application Enhancement
+**Lingua Phone Application Enhancement**
 
 Project Status: COMPLETE ✅
 
