@@ -26,6 +26,14 @@ echo - Google Cloud Text-to-Speech
 echo - Bazaar Marketplace Integration
 echo ========================================
 echo.
+echo Technologies Used:
+echo - Frontend: React, TypeScript, Vite, Tailwind CSS
+echo - Backend: Node.js, Express, Google Cloud APIs
+echo - Deployment: Docker, Kubernetes, Google Kubernetes Engine
+echo - AI: Google Gemini AI
+echo.
+echo For a complete list of technologies, see BUILT_WITH.md in the repository.
+echo.
 echo To explore the source code, visit:
 echo https://github.com/Soum1989/Lingua-phone-monorepo
 echo.

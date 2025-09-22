@@ -12,17 +12,14 @@ Or run the included script: **ACCESS_APPLICATION.bat**
 
 The application is currently deployed on Google Kubernetes Engine (GKE) and is fully functional with all enhanced features.
 
-Key Features in the Live Demo
+**Note:** For full functionality including microphone access and STT transcription, HTTPS access is required. If you're experiencing issues with microphone access, please see the SSL Certificate section below.
 
-AI Shopping Assistant with accurate product recommendations
-
-Multilingual support (English, Bengali, and more)
-
-Google Cloud Text-to-Speech integration
-
-Bazaar Marketplace product rendering
-
-Gender-specific clothing recommendations
+### Key Features in the Live Demo:
+- AI Shopping Assistant with accurate product recommendations
+- Multilingual support (English, Bengali, and more)
+- Google Cloud Text-to-Speech integration
+- Bazaar Marketplace product rendering
+- Gender-specific clothing recommendations
 
 📂 Source Code Repository
 
@@ -32,17 +29,15 @@ Clone the repository to explore the code, contribute, or deploy the application 
 
 git clone https://github.com/Soum1989/Lingua-phone-monorepo.git
 cd Lingua-phone-monorepo
+```
 
-Features Implemented
-Enhanced Shopping Assistant
+## Features Implemented
 
-Provides accurate product recommendations based on user queries
-
-Handles gender-specific clothing recommendations correctly
-
-Responds appropriately for products not in inventory with smart alternatives
-
-Renders products from Bazaar Marketplace
+### Enhanced Shopping Assistant
+- Provides accurate product recommendations based on user queries
+- Handles gender-specific clothing recommendations correctly
+- Responds appropriately for products not in inventory with smart alternatives
+- Renders products from Bazaar Marketplace
 
 Multilingual Support
 

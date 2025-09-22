@@ -19,6 +19,8 @@ The application is currently deployed on Google Kubernetes Engine (GKE) and is f
 - Bazaar Marketplace product rendering
 - Gender-specific clothing recommendations
 
+**Note:** For full functionality including microphone access and STT transcription, HTTPS access is required. SSL certificate deployment is planned for this afternoon.
+
 ## 📂 Source Code Repository
 
 **GitHub Repository:** [https://github.com/Soum1989/Lingua-phone-monorepo](https://github.com/Soum1989/Lingua-phone-monorepo)
@@ -29,6 +31,30 @@ You can clone the repository to explore the code, contribute, or deploy the appl
 git clone https://github.com/Soum1989/Lingua-phone-monorepo.git
 cd Lingua-phone-monorepo
 ```
+
+## 🛠️ Technologies Used
+
+For a comprehensive list of all technologies, frameworks, platforms, and services used in building this application, please see [BUILT_WITH.md](BUILT_WITH.md).
+
+## 🔒 SSL Certificate Deployment - Afternoon Plan
+
+A robust SSL certificate deployment is planned for this afternoon (3:00 PM onwards) to enable:
+- HTTPS access to the application
+- Microphone permissions for STT transcription
+- Full browser security compliance
+
+### Resources Prepared:
+- [AFTERNOON_SSL_DEPLOYMENT_PLAN.md](AFTERNOON_SSL_DEPLOYMENT_PLAN.md) - Complete deployment strategy
+- [AFTERNOON_SSL_CHECKLIST.md](AFTERNOON_SSL_CHECKLIST.md) - Step-by-step readiness checklist
+- [CLEANUP_SSL_RESOURCES.bat](CLEANUP_SSL_RESOURCES.bat) - Script to prepare for fresh deployment
+- [MONITOR_SSL_CERTIFICATE.bat](MONITOR_SSL_CERTIFICATE.bat) - Continuous monitoring tool
+
+### Key Steps for Afternoon Session:
+1. Clean up existing SSL resources
+2. Verify DNS configuration (A record pointing to Load Balancer IP: 34.54.239.230)
+3. Deploy new managed certificate and ingress
+4. Monitor provisioning status
+5. Test HTTPS access and microphone functionality
 
 ## Features Successfully Implemented
 

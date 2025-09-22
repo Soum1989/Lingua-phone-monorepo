@@ -1,40 +1,66 @@
 @echo off
+title SSL Certificate Monitor - Lingua Phone
+
 echo ========================================
-echo SSL Certificate Provisioning Monitor
+echo SSL Certificate Monitor for Lingua Phone
 echo ========================================
+echo.
+echo This script will monitor the SSL certificate status for:
+echo https://lingua-phone.gketurns10.com
+echo.
+echo Current Load Balancer IP: 34.54.239.230
+echo Current Service IP: 34.45.239.154
+echo.
+echo IMPORTANT: Make sure your DNS A record points to the Load Balancer IP!
+echo.
+echo Press Ctrl+C to stop monitoring
+echo.
+echo ========================================
+echo Starting monitoring...
+echo.
 
 :loop
-echo.
-echo Current time: %date% %time%
-echo.
-echo 1. Checking certificate status...
-kubectl get managedcertificate lingua-frontend-certificate -n lingua-app
+echo [%date% %time%] Checking certificate status...
+echo --------------------------------------------------
+
+REM Check if kubectl is available
+where kubectl >nul 2>&1
+if %errorlevel% neq 0 (
+    echo ERROR: kubectl not found. Please install kubectl and try again.
+    pause
+    exit /b 1
+)
+
+REM Get certificate status
+for /f "tokens=*" %%i in ('kubectl get managedcertificate lingua-frontend-certificate -n lingua-app -o jsonpath^="{.status.certificateStatus}" 2^>nul') do set CERT_STATUS=%%i
+
+REM Get domain status
+for /f "tokens=*" %%i in ('kubectl get managedcertificate lingua-frontend-certificate -n lingua-app -o jsonpath^="{.status.domainStatus[0].status}" 2^>nul') do set DOMAIN_STATUS=%%i
+
+REM Display current status
+echo Certificate Status: %CERT_STATUS%
+echo Domain Status: %DOMAIN_STATUS%
+
+REM Check if certificate is active
+if /i "%CERT_STATUS%"=="Active" (
+    if /i "%DOMAIN_STATUS%"=="True" (
+        echo.
+        echo **************************************************
+        echo *  ✅ SSL CERTIFICATE IS NOW ACTIVE!              *
+        echo *                                                *
+        echo *  Your application should be accessible at:     *
+        echo *  https://lingua-phone.gketurns10.com           *
+        echo *                                                *
+        echo *  Microphone and STT functionality should work  *
+        echo **************************************************
+        echo.
+        pause
+        exit /b 0
+    )
+)
 
 echo.
-echo 2. Detailed certificate information...
-kubectl describe managedcertificate lingua-frontend-certificate -n lingua-app | findstr "Status:\|Certificate Status:\|Domain Status:"
-
+echo ⏳ Waiting for certificate activation... Checking again in 60 seconds.
 echo.
-echo 3. Checking ingress status...
-kubectl get ingress lingua-ingress -n lingua-app
-
-echo.
-echo 4. Checking ingress details...
-kubectl describe ingress lingua-ingress -n lingua-app | findstr "Warning:\|Error:\|Address:\|Events:"
-
-echo.
-echo Certificate Status Legend:
-echo ------------------------
-echo Provisioning - Certificate is being created (DNS verification in progress)
-echo Active       - Certificate is ready and valid
-echo Failed       - There was an error provisioning the certificate
-echo Renewing     - Certificate is being renewed
-
-echo.
-echo If the certificate remains in "Provisioning" status for more than 15-20 minutes,
-echo there may be an issue with your domain configuration.
-
-echo.
-echo Press Ctrl+C to stop monitoring, or wait 60 seconds for automatic refresh...
 timeout /t 60 /nobreak >nul
 goto loop

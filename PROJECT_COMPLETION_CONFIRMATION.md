@@ -30,6 +30,10 @@ git clone https://github.com/Soum1989/Lingua-phone-monorepo.git
 cd Lingua-phone-monorepo
 ```
 
+## 🛠️ Technologies Used
+
+For a comprehensive list of all technologies, frameworks, platforms, and services used in building this application, please see [BUILT_WITH.md](BUILT_WITH.md).
+
 ## Features Successfully Implemented
 
 ### 1. Enhanced Shopping Assistant
