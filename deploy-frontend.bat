@@ -6,7 +6,7 @@ set IMAGE_NAME=lingua-frontend
 set TAG=latest
 
 echo Building frontend Docker image...
-docker build -t gcr.io/%PROJECT_ID%/%IMAGE_NAME%:%TAG% -f docker/frontend-k8s.Dockerfile .
+docker build -t gcr.io/%PROJECT_ID%/%IMAGE_NAME%:%TAG% -f docker/frontend.Dockerfile .
 
 if %errorlevel% neq 0 (
     echo Error: Failed to build Docker image

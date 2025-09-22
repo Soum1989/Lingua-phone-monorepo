@@ -7,7 +7,7 @@ IMAGE_NAME="lingua-frontend"
 TAG="latest"
 
 echo "Building frontend Docker image..."
-docker build -t gcr.io/$PROJECT_ID/$IMAGE_NAME:$TAG -f docker/frontend-k8s.Dockerfile .
+docker build -t gcr.io/$PROJECT_ID/$IMAGE_NAME:$TAG -f docker/frontend.Dockerfile .
 
 if [ $? -ne 0 ]; then
     echo "Error: Failed to build Docker image"
