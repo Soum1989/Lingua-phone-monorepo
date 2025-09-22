@@ -62,6 +62,35 @@
         .repo-link a:hover {
             text-decoration: underline;
         }
+        .tech-section {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .tech-item {
+            background-color: #3498db;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            text-align: center;
+        }
+        .warning {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: left;
+            border-radius: 0 5px 5px 0;
+        }
         .footer {
             margin-top: 30px;
             font-size: 14px;
@@ -75,6 +104,12 @@
         <p>The application has been successfully deployed and is ready to use!</p>
         
         <a href="http://34.45.239.154" class="button" target="_blank">Try It Out Now</a>
+        
+        <div class="warning">
+            <h3>⚠️ Important Note About Microphone Access</h3>
+            <p>For full functionality including microphone access and speech-to-text transcription, the application must be accessed over HTTPS. Modern browsers require HTTPS for microphone permissions.</p>
+            <p>If you're experiencing issues with microphone access, please see the SSL Certificate section below.</p>
+        </div>
         
         <div class="features">
             <h2>Key Features:</h2>
@@ -95,11 +130,43 @@
             <p>git clone https://github.com/Soum1989/Lingua-phone-monorepo.git</p>
         </div>
         
+        <div class="tech-section">
+            <h3>🛠️ Built With:</h3>
+            <div class="tech-grid">
+                <div class="tech-item">React</div>
+                <div class="tech-item">TypeScript</div>
+                <div class="tech-item">Node.js</div>
+                <div class="tech-item">Express</div>
+                <div class="tech-item">Google Cloud</div>
+                <div class="tech-item">Kubernetes</div>
+                <div class="tech-item">Docker</div>
+                <div class="tech-item">Vite</div>
+                <div class="tech-item">Tailwind CSS</div>
+                <div class="tech-item">Google AI</div>
+                <div class="tech-item">GKE</div>
+                <div class="tech-item">REST API</div>
+            </div>
+            <p>For a complete list of technologies, see <a href="BUILT_WITH.md" target="_blank">BUILT_WITH.md</a> in the repository.</p>
+        </div>
+        
+        <div class="warning">
+            <h3>🔒 SSL Certificate Configuration</h3>
+            <p>The Google-managed SSL certificate for <code>lingua-phone.gketurns10.com</code> is currently in PROVISIONING status with domain status FAILED_NOT_VISIBLE.</p>
+            <p><strong>Issue:</strong> The domain is pointing to the service IP instead of the Load Balancer IP.</p>
+            <p><strong>Solution:</strong> Update your DNS A record to point <code>lingua-phone.gketurns10.com</code> to <code>34.54.239.230</code> (Load Balancer IP)</p>
+            <p>For detailed instructions, see:</p>
+            <ul>
+                <li><a href="SSL_CERTIFICATE_TROUBLESHOOTING.md" target="_blank">SSL_CERTIFICATE_TROUBLESHOOTING.md</a></li>
+                <li><a href="FIX_DNS_CONFIGURATION.md" target="_blank">FIX_DNS_CONFIGURATION.md</a></li>
+            </ul>
+        </div>
+        
         <p>Click the button above to access the deployed application directly.</p>
         
         <div class="footer">
             <p>Application deployed on Google Kubernetes Engine (GKE)</p>
             <p>External IP: 34.45.239.154</p>
+            <p>Load Balancer IP: 34.54.239.230</p>
         </div>
     </div>
 </body>

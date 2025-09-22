@@ -1,0 +1,39 @@
+SSL CERTIFICATE TROUBLESHOOTING FILES CREATED
+
+The following files have been created to help troubleshoot and resolve the SSL certificate issue:
+
+1. SSL_CERTIFICATE_TROUBLESHOOTING.md
+   - Comprehensive guide to diagnose and fix SSL certificate issues
+   - Detailed root cause analysis
+   - Step-by-step solution implementation
+   - Monitoring scripts and verification steps
+
+2. FIX_DNS_CONFIGURATION.md
+   - Specific instructions to fix DNS configuration issues
+   - Provider-specific DNS update instructions
+   - Verification steps and troubleshooting tips
+
+3. MONITOR_SSL_CERTIFICATE.bat
+   - Automated script to monitor SSL certificate status
+   - Continuous monitoring with status updates
+   - Automatic notification when certificate becomes active
+
+4. Updated documentation files:
+   - README.md - Added SSL certificate information and warnings
+   - index.html - Added SSL certificate warnings and information
+   - ACCESS_APPLICATION.bat - Added SSL certificate information
+
+IMPORTANT NOTES:
+
+- The SSL certificate issue is caused by the domain pointing to the service IP (34.45.239.154) 
+  instead of the Load Balancer IP (34.54.239.230)
+  
+- To fix this issue, you need to update your DNS A record to point lingua-phone.gketurns10.com 
+  to 34.54.239.230
+  
+- After updating DNS, wait for propagation (15-30 minutes) and monitor the certificate status
+  
+- Once the certificate becomes active, the application will be fully accessible via HTTPS 
+  with all features including microphone access for STT transcription
+
+For detailed instructions, refer to the markdown files mentioned above.

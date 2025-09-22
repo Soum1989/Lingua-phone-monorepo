@@ -12,12 +12,31 @@ Or run the included script: `ACCESS_APPLICATION.bat`
 
 The application is currently deployed on Google Kubernetes Engine (GKE) and is fully functional with all enhanced features.
 
+**Note:** For full functionality including microphone access and STT transcription, HTTPS access is required. If you're experiencing issues with microphone access, please see the SSL Certificate section below.
+
 ### Key Features in the Live Demo:
 - AI Shopping Assistant with accurate product recommendations
 - Multilingual support (English, Bengali, and more)
 - Google Cloud Text-to-Speech integration
 - Bazaar Marketplace product rendering
 - Gender-specific clothing recommendations
+
+## 🔒 SSL Certificate Configuration (Important for Microphone Access)
+
+If you're experiencing issues with microphone access or STT transcription, this is likely due to the application being accessed over HTTP instead of HTTPS. Modern browsers require HTTPS for microphone access.
+
+**Current SSL Status:** The Google-managed SSL certificate for `lingua-phone.gketurns10.com` is in `PROVISIONING` status with domain status `FAILED_NOT_VISIBLE`.
+
+**Issue:** The domain is currently pointing to the service IP instead of the Load Balancer IP.
+
+**Solution:**
+1. Update your DNS A record to point `lingua-phone.gketurns10.com` to `34.54.239.230` (Load Balancer IP)
+2. Wait for DNS propagation (15-30 minutes)
+3. Monitor certificate status with `MONITOR_SSL_CERTIFICATE.bat`
+
+For detailed troubleshooting instructions, see:
+- [SSL_CERTIFICATE_TROUBLESHOOTING.md](SSL_CERTIFICATE_TROUBLESHOOTING.md)
+- [FIX_DNS_CONFIGURATION.md](FIX_DNS_CONFIGURATION.md)
 
 ## 📂 Source Code Repository
 
@@ -29,6 +48,10 @@ You can clone the repository to explore the code, contribute, or deploy the appl
 git clone https://github.com/Soum1989/Lingua-phone-monorepo.git
 cd Lingua-phone-monorepo
 ```
+
+## 🛠️ Built With
+
+For a comprehensive list of all technologies, frameworks, platforms, and services used in building this application, please see [BUILT_WITH.md](BUILT_WITH.md).
 
 ## Features Implemented
 

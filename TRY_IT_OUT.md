@@ -39,6 +39,10 @@ git clone https://github.com/Soum1989/Lingua-phone-monorepo.git
 cd Lingua-phone-monorepo
 ```
 
+## Technologies Used
+
+For a comprehensive list of all technologies, frameworks, platforms, and services used in building this application, please see [BUILT_WITH.md](BUILT_WITH.md).
+
 ## Deployment Status
 
 ✅ **Frontend Pod**: Running (1/1)  

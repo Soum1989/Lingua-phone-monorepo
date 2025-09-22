@@ -26,6 +26,3 @@ spec:
                 name: lingua-backend-service
                 port:
                   number: 3002
-  tls:
-  - hosts:
-    - lingua-phone.gketurns10.com
