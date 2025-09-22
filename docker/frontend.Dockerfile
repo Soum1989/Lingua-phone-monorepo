@@ -2,6 +2,9 @@
 FROM node:20 AS build
 WORKDIR /app
 
+# Copy the root package.json files
+COPY package*.json ./
+
 # Copy the frontend package.json files from the correct path
 COPY ./packages/frontend/package*.json ./packages/frontend/
 
@@ -12,7 +15,7 @@ RUN npm install
 COPY ./packages/frontend/ ./packages/frontend/
 
 # Build frontend
-RUN npm run build
+RUN npm run build --workspace=frontend
 
 # Stage 2: Serve with Nginx
 FROM nginx:alpine
