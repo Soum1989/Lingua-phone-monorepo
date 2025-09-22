@@ -1,31 +1,22 @@
-# Build stage
-from node:22-alpine AS build
-
-# Set working directory
+# Stage 1: Build the frontend
+FROM node:20 AS build
 WORKDIR /app
 
-# Copy frontend package files
-COPY packages/frontend/package.json ./packages/frontend/package.json
-COPY packages/frontend/package-lock.json ./packages/frontend/package-lock.json
+# Copy the frontend package.json files from the correct path
+COPY packages/frontend/package*.json ./
 
 # Install dependencies
-RUN npm ci --only=production --prefix packages/frontend
+RUN npm install
 
-# Copy frontend source code
-COPY packages/frontend/src ./packages/frontend/src
-COPY packages/frontend/public ./packages/frontend/public
+# Copy the rest of the frontend code
+COPY packages/frontend/ ./
 
-# Build the frontend
-RUN npm run build --prefix packages/frontend
+# Build frontend
+RUN npm run build
 
-# Production stage
-from nginx:alpine
-
-# Copy built frontend assets
-COPY --from=build /app/packages/frontend/dist /usr/share/nginx/html
-
-# Expose port
+# Stage 2: Serve with Nginx
+FROM nginx:alpine
+COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/dist /usr/share/nginx/html
 EXPOSE 80
-
-# Start Nginx
 CMD ["nginx", "-g", "daemon off;"]
