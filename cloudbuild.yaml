@@ -1,20 +1,11 @@
 steps:
   # Build the frontend image using the fixed Dockerfile
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/lingua-frontend:$COMMIT_SHA', '-f', 'docker/frontend.Dockerfile', '.']
+    args: ['build', '-t', 'gcr.io/lingua-phone/lingua-frontend:latest', '-f', 'docker/frontend.Dockerfile', '.']
   
   # Push the frontend image to Container Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/lingua-frontend:$COMMIT_SHA']
-
-  # Tag the image as latest
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['tag', 'gcr.io/$PROJECT_ID/lingua-frontend:$COMMIT_SHA', 'gcr.io/$PROJECT_ID/lingua-frontend:latest']
-
-  # Push the latest tag
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/lingua-frontend:latest']
+    args: ['push', 'gcr.io/lingua-phone/lingua-frontend:latest']
 
 images:
-  - 'gcr.io/$PROJECT_ID/lingua-frontend:$COMMIT_SHA'
-  - 'gcr.io/$PROJECT_ID/lingua-frontend:latest'
+  - 'gcr.io/lingua-phone/lingua-frontend:latest'
