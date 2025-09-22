@@ -13,7 +13,7 @@
 
 1. **Build the frontend image**:
    ```bash
-   docker build -t gcr.io/YOUR_PROJECT_ID/lingua-frontend:latest -f docker/frontend-k8s.Dockerfile .
+   docker build -t gcr.io/YOUR_PROJECT_ID/lingua-frontend:latest -f frontend.Dockerfile .
    ```
 
 2. **Push the image to Google Container Registry**:
@@ -53,7 +53,7 @@
 ### Common Issues
 
 1. **COPY failed: no source files were specified**
-   - This was fixed by using the correct Dockerfile ([docker/frontend-k8s.Dockerfile](file:///c%3A/Users/Lenovo/Lingua-phone-monorepo/docker/frontend-k8s.Dockerfile)) with proper paths.
+   - This was fixed by creating a proper [frontend.Dockerfile](file:///c%3A/Users/Lenovo/Lingua-phone-monorepo/docker/frontend-k8s.Dockerfile) at the root with correct paths.
    - Ensure you're building from the root of the repository.
 
 2. **Image pull errors**
@@ -66,7 +66,7 @@
 
 ## Files Overview
 
-- **[docker/frontend-k8s.Dockerfile](file:///c%3A/Users/Lenovo/Lingua-phone-monorepo/docker/frontend-k8s.Dockerfile)**: Dockerfile for building the frontend image for Kubernetes
+- **[frontend.Dockerfile](file:///c%3A/Users/Lenovo/Lingua-phone-monorepo/docker/frontend-k8s.Dockerfile)**: Dockerfile for building the frontend image (now at root)
 - **[cloudbuild.yaml](file:///c%3A/Users/Lenovo/Lingua-phone-monorepo/cloudbuild.yaml)**: Cloud Build configuration for automated builds
 - **[k8s/frontend-deployment.yaml](file:///c%3A/Users/Lenovo/Lingua-phone-monorepo/k8s/frontend-deployment.yaml)**: Kubernetes deployment configuration
 - **[docker/nginx-k8s.conf](file:///c%3A/Users/Lenovo/Lingua-phone-monorepo/docker/nginx-k8s.conf)**: Nginx configuration for the frontend in Kubernetes
