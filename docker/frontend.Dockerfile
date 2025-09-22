@@ -1,37 +1,30 @@
 # Build stage
-FROM node:20 AS build
+FROM node:22-alpine AS build
 
-# Set the working directory
+# Set working directory
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
+# Copy frontend package files
 COPY packages/frontend/package*.json ./packages/frontend/
 
 # Install dependencies
-RUN npm install
+RUN npm ci --only=production --prefix packages/frontend
 
-# Copy the rest of the application code
-COPY . .
+# Copy frontend source code
+COPY packages/frontend/src ./packages/frontend/src
+COPY packages/frontend/public ./packages/frontend/public
 
 # Build the frontend
-RUN npm run build --workspace=frontend
+RUN npm run build --prefix packages/frontend
 
 # Production stage
-FROM nginx:alpine
+from nginx:alpine
 
-# Copy the built files from the previous stage
+# Copy built frontend assets
 COPY --from=build /app/packages/frontend/dist /usr/share/nginx/html
 
-# Copy nginx configuration
-COPY docker/nginx.conf /etc/nginx/nginx.conf
-COPY docker/entrypoint.sh /docker/entrypoint.sh
-
-# Make the entrypoint script executable
-RUN chmod +x /docker/entrypoint.sh
-
-# Expose port 80 (this is informational)
+# Expose port
 EXPOSE 80
 
-# Use the entrypoint script to start nginx
-ENTRYPOINT ["/docker/entrypoint.sh"]
+# Start Nginx
+CMD ["nginx", "-g", "daemon off;"]
