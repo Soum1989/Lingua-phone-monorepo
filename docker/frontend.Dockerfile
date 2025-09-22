@@ -1,11 +1,12 @@
 # Build stage
-FROM node:22-alpine AS build
+from node:22-alpine AS build
 
 # Set working directory
 WORKDIR /app
 
 # Copy frontend package files
-COPY packages/frontend/package*.json ./packages/frontend/
+COPY packages/frontend/package.json ./packages/frontend/package.json
+COPY packages/frontend/package-lock.json ./packages/frontend/package-lock.json
 
 # Install dependencies
 RUN npm ci --only=production --prefix packages/frontend
